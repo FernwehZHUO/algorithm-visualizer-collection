@@ -1,0 +1,348 @@
+@import "./variables.scss";
+
+button {
+  border-radius: 0;
+  background-color: $color-grey;
+  border: none;
+  padding: 5px 10px;
+  transition: 200ms ease all;
+  font-size: 0.75em;
+
+  &:not(:disabled) {
+    cursor: pointer;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: darken($color: $color-grey, $amount: 10%);
+  }
+}
+
+.switch {
+  display: flex;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-width: 320px;
+  background-color: $color-white;
+  align-items: stretch;
+
+  &__content-wrapper {
+    flex: 1;
+    position: relative;
+  }
+
+  &__content {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__left {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  &__right {
+    max-width: 600px;
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+
+    &__contents {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    &__header {
+      flex: 1;
+    }
+  }
+
+  &__left,
+  &__right {
+    &--hidden {
+      display: none;
+    }
+  }
+}
+
+.view-switch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.graph-controls {
+  min-height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+
+  label {
+    user-select: none;
+    display: flex;
+    align-items: center;
+  }
+
+  > *:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.graph-visualization {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  box-shadow: -5px 5px 15px -10px $color-black inset;
+
+  &__overlay {
+    position: absolute;
+    $margin: 20px;
+    left: $margin;
+    right: $margin;
+    top: $margin;
+    bottom: $margin;
+  }
+
+  &__cytoscape {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}
+
+.horizontal-divider {
+  width: 100%;
+  border-bottom: 2px solid $color-black;
+}
+
+.node-queue-stack-visualization {
+  $size: 60px;
+  $border-size: 2px;
+  $border-color: $color-black;
+
+  display: flex;
+  align-items: center;
+  border-top: $border-size solid $border-color;
+  border-bottom: $border-size solid $border-color;
+
+  &__title {
+    font-family: KaTeX_Main;
+    margin: 0 1em;
+  }
+
+  &__elements {
+    height: $size;
+    flex: 1;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  &__elements-front {
+    display: flex;
+    flex: 1;
+  }
+
+  &__elements-back {
+    margin-left: -$border-size;
+
+    .node-queue-stack-visualization__element {
+      border-right: none;
+    }
+  }
+
+  &__element {
+    width: $size;
+    height: $size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: $border-size solid $border-color;
+    &:first-child {
+      border-left: $border-size solid $border-color;
+    }
+  }
+
+  &__label {
+    width: 0.75 * $size;
+    height: 0.75 * $size;
+    line-height: 0.75 * $size;
+    border-radius: 100%;
+    text-align: center;
+    font-family: KaTeX_Math;
+    border: $border-size solid $border-color;
+    &--type-source {
+      border-style: double;
+    }
+    &--type-sink {
+      border-style: dashed;
+    }
+  }
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid $color-black;
+  min-height: 52px;
+  padding: 0 10px;
+
+  &__button {
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}
+
+.pseudocode {
+  position: relative;
+  flex-shrink: 1;
+  z-index: 1;
+  min-height: 200px;
+
+  .ps-root .ps-algorithm {
+    border: none;
+  }
+
+  .ps-line::before {
+    content: "|";
+    color: transparent;
+    user-select: none;
+    position: absolute;
+    width: 100%;
+    display: inline-block;
+    left: 0;
+    background-color: var(--block-color);
+    z-index: -1;
+    line-height: 1.4;
+    transition: 400ms ease background-color;
+  }
+
+  @for $i from $highlighted-lines-count through 0 {
+    .ps-line--highlighted-#{$i}::before {
+      background-color: lighten(
+        $color-highlight,
+        calc((($i) / ($highlighted-lines-count)) * 50%)
+      );
+    }
+  }
+
+  .ps-line::after {
+    content: attr(data-block-label);
+    user-select: none;
+    font-family: KaTeX_Main;
+    position: absolute;
+    display: inline-block;
+    right: 0;
+    z-index: 1;
+    line-height: 1.4;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+
+  &__icon {
+    width: 50px;
+    @media (min-width: $min-width-big-screen) {
+      width: 75px;
+    }
+  }
+}
+
+.footer {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  white-space: pre;
+  padding: 10px;
+  border-top: 2px solid #000000;
+}
+
+a,
+[role="button"] {
+  cursor: pointer;
+  color: $color-black;
+  text-decoration: none;
+  transition: opacity 200ms ease;
+
+  &:hover {
+    opacity: 0.75;
+    text-decoration: underline;
+  }
+}
+
+.references {
+  padding: 1em 2em;
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    font-family: KaTeX_Main;
+    list-style-type: square;
+  }
+}
+
+h1,
+h2 {
+  font-size: 0.75em;
+
+  @media (min-width: $min-width-big-screen) {
+    font-size: 1em;
+  }
+}
+
+.dropdown {
+  position: relative;
+
+  &__button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+  }
+
+  &__content {
+    position: absolute;
+    background-color: $color-grey;
+    z-index: 1;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    padding: 5px 10px;
+  }
+
+  &--size-s,
+  &--size-s &__content {
+    width: 100px;
+  }
+
+  &--size-m,
+  &--size-m &__content {
+    width: 125px;
+  }
+
+  &--size-l,
+  &--size-l &__content {
+    width: 150px;
+  }
+}
