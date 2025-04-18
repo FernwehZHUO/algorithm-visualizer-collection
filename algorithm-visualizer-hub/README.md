@@ -45,9 +45,23 @@ npm install
 
 ## 运行应用程序
 
-有两种方式运行应用程序：
+我们提供了三种方式运行应用程序：
 
-### 选项1：同时运行所有应用程序
+### 选项1：使用Concurrently一键启动所有应用（推荐）
+
+从algorithm-visualizer-hub目录中运行：
+
+```bash
+npm run start:concurrent
+```
+
+这是最简单的方式！该命令将：
+1. 在端口3000上启动hub应用
+2. 在端口3001上启动maxflow应用
+3. 在端口3002上启动maximum-matching-graph应用
+4. 自动配置所有端口和连接
+
+### 选项2：使用setup-and-run.js脚本
 
 从algorithm-visualizer-hub目录中运行：
 
@@ -60,7 +74,7 @@ npm run start:all
 2. 并行启动所有三个应用程序
 3. 通过中央枢纽提供统一的体验
 
-### 选项2：单独运行应用程序
+### 选项3：单独运行应用程序
 
 您也可以单独运行每个应用程序：
 
@@ -78,6 +92,26 @@ cd ../maximum-matching-graph
 set PORT=3002 && npm start  # 在macOS/Linux上使用export PORT=3002
 ```
 
+## 部署到静态网站
+
+项目提供了一个静态构建脚本，可以将所有应用打包成一个静态网站：
+
+```bash
+# 从algorithm-visualizer-hub目录运行
+npm run build:static
+```
+
+这将:
+1. 构建hub应用并更新配置为相对路径
+2. 构建maxflow和maximum-matching-graph应用
+3. 将所有构建结果合并到`static-build`目录中
+4. 创建一个README文件，说明如何部署
+
+构建完成后，您可以：
+1. 本地测试构建结果：`npm run serve:static`
+2. 将`static-build`目录部署到任何静态Web服务器
+3. 或作为GitHub Pages部署（将目录内容推送到gh-pages分支）
+
 ## 使用方法
 
 1. 打开浏览器并导航到http://localhost:3000
@@ -88,7 +122,7 @@ set PORT=3002 && npm start  # 在macOS/Linux上使用export PORT=3002
 
 ## 实现细节
 
-Hub应用现在使用iframe嵌入其他应用，而不是重定向到它们。这种方法的优势：
+Hub应用使用iframe嵌入其他应用，而不是重定向到它们。这种方法的优势：
 
 1. **更好的用户体验** - 用户不会离开主应用，保持了统一的界面
 2. **容错处理** - 即使某个应用未启动，也能显示有用的错误信息
@@ -102,4 +136,4 @@ Hub应用现在使用iframe嵌入其他应用，而不是重定向到它们。�
 
 - 每个项目仍然是具有自己代码库的独立应用程序
 - hub提供统一的入口点，无需修改原始项目
-- 对于部署，您可以单独部署每个应用程序，并更新hub的config文件中的URL
+- 对于部署，您可以单独部署每个应用程序，并更新hub的config文件中的URL，或使用`build:static`命令创建统一的静态部署

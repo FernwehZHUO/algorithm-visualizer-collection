@@ -12,6 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 import ShareIcon from '@mui/icons-material/Share';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import config from '../config';
 
 const Home: React.FC = () => {
   return (
@@ -40,8 +41,9 @@ const Home: React.FC = () => {
             </CardContent>
             <CardActions>
               <Button 
-                component={Link} 
-                to="/maxflow" 
+                href={config.maxFlowUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 size="large" 
                 color="primary" 
                 variant="contained" 
@@ -69,8 +71,9 @@ const Home: React.FC = () => {
             </CardContent>
             <CardActions>
               <Button 
-                component={Link} 
-                to="/maximum-matching" 
+                href={config.maximumMatchingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 size="large" 
                 color="secondary" 
                 variant="contained" 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
+import config from '../config';
 
 const Navbar: React.FC = () => {
   return (
@@ -15,10 +16,20 @@ const Navbar: React.FC = () => {
           <Button color="inherit" component={Link} to="/">
             Home
           </Button>
-          <Button color="inherit" component={Link} to="/maxflow">
+          <Button 
+            color="inherit" 
+            href={config.maxFlowUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Max Flow
           </Button>
-          <Button color="inherit" component={Link} to="/maximum-matching">
+          <Button 
+            color="inherit" 
+            href={config.maximumMatchingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Maximum Matching
           </Button>
         </Box>

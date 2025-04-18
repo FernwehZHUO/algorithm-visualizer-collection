@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import config from '../config';
 
 const MaximumMatchingPage: React.FC = () => {
@@ -34,9 +34,10 @@ const MaximumMatchingPage: React.FC = () => {
             transform: 'translate(-50%, -50%)',
             textAlign: 'center',
             p: 3,
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
             borderRadius: 2,
-            maxWidth: '80%'
+            maxWidth: '80%',
+            boxShadow: 3
           }}
         >
           <Typography variant="h5" gutterBottom>
@@ -45,14 +46,42 @@ const MaximumMatchingPage: React.FC = () => {
           <Typography paragraph>
             要查看Maximum Matching Algorithm Visualization，请确保应用程序已在端口3002上启动。
           </Typography>
-          <Typography>
-            您可以通过以下方式启动它：
-            <pre style={{ textAlign: 'left', margin: '10px 0' }}>
-              cd ../maximum-matching-graph<br/>
-              npm install<br/>
-              set PORT=3002 && npm start
-            </pre>
-          </Typography>
+          <Box sx={{ mb: 2, mt: 2, p: 2, bgcolor: 'info.light', borderRadius: 1 }}>
+            <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 'bold' }}>
+              方法1：单独启动Maximum Matching应用
+            </Typography>
+            <Typography component="div" sx={{ textAlign: 'left' }}>
+              <pre style={{ margin: '10px 0', padding: '10px', backgroundColor: '#f5f5f5', borderRadius: '4px', overflow: 'auto' }}>
+                cd ../maximum-matching-graph<br/>
+                npm install<br/>
+                set PORT=3002 && npm start
+              </pre>
+            </Typography>
+          </Box>
+          
+          <Box sx={{ mt: 2, p: 2, bgcolor: 'success.light', borderRadius: 1 }}>
+            <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 'bold' }}>
+              方法2：一键启动所有应用（推荐）
+            </Typography>
+            <Typography paragraph sx={{ textAlign: 'left' }}>
+              返回Hub主目录并运行：
+            </Typography>
+            <Typography component="div" sx={{ textAlign: 'left' }}>
+              <pre style={{ margin: '10px 0', padding: '10px', backgroundColor: '#f5f5f5', borderRadius: '4px', overflow: 'auto' }}>
+                cd algorithm-visualizer-hub<br/>
+                npm run start:concurrent
+              </pre>
+            </Typography>
+          </Box>
+          
+          <Button 
+            variant="contained" 
+            color="secondary" 
+            sx={{ mt: 3 }}
+            onClick={() => window.location.href = '/'}
+          >
+            返回主页
+          </Button>
         </Box>
       </Box>
     </Box>
